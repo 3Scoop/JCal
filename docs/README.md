@@ -1,3 +1,4 @@
+[Downloads](https://github.com/3Scoop/JCal/releases)
 
 [JCal](https://github.com/3Scoop/JCal)
 
