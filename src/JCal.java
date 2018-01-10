@@ -17,12 +17,14 @@ public class JCal {
     private int finalNum;
     private boolean hasEquals;
     private boolean hasNum;
+    private String operation;
 
     public static void main(String[] args) {
         JCal gui = new JCal();
         gui.go();
     }//end main
 
+    //seperate strings into nums;
     private void findNum(String type) {
 
         num1S = inp.substring( 0, inp.indexOf(type));
@@ -33,34 +35,36 @@ public class JCal {
     } //end findNum
 
     public void calculate() {
-        if(inp.contains("+")) {
 
-            findNum("+");
+      //check the symbol
+      switch(operation) {
 
-            finalNum = num1 + num2;
-            calc.setText("" + finalNum);
-        } if (inp.contains("-")) {
+        case "+":
+        findNum("+");
+        finalNum = num1 + num2;
+        calc.setText("" + finalNum);
+        break;
 
-            findNum("-");
+        case "-":
+        findNum("-");
+        finalNum = num1 - num2;
+        calc.setText("" + finalNum);
+        break;
 
-            finalNum = num1 - num2;
-            calc.setText("" + finalNum);
+        case "*":
+        findNum("*");
+        finalNum = num1 * num2;
+        calc.setText("" + finalNum);
+        break;
 
-        }//end if
-        if (inp.contains("*")) {
+        case "/":
+        findNum("/");
+        finalNum = num1 / num2;
+        calc.setText("" + finalNum);
+        break;
 
-            findNum("*");
+      }//end switch
 
-            finalNum = num1 * num2;
-            calc.setText("" + finalNum);
-        }//end if
-        if (inp.contains("/")) {
-
-            findNum("/");
-
-            finalNum = num1 / num2;
-            calc.setText("" + finalNum);
-        }//end if
     } // end calculate
 
     public void go() {
@@ -82,30 +86,37 @@ public class JCal {
         clear.setFont(calcFont);
         clear.addActionListener(new clearListener());
         clear.setBackground(new Color(244, 71, 65));
+        clear.setOpaque(true);
 
         JButton equals = new JButton(" = ");
         equals.setFont(symFont);
         equals.addActionListener(new calculatorListener());
         equals.setBackground(new Color(69, 122, 247));
+        equals.setOpaque(true);
         JButton divide = new JButton("/");
         divide.setFont(symFont);
         divide.addActionListener(new symbolListener());
         divide.setBackground(symColor);
+        divide.setOpaque(true);
         JButton multiply = new JButton("*");
         multiply.setFont(symFont);
         multiply.addActionListener(new symbolListener());
         multiply.setBackground(symColor);
+        multiply.setOpaque(true);
         JButton minus = new JButton("-");
         minus.setFont(symFont);
         minus.addActionListener(new symbolListener());
         minus.setBackground(symColor);
+        minus.setOpaque(true);
         JButton add = new JButton("+");
         add.setFont(symFont);
         add.addActionListener(new symbolListener());
         add.setBackground(symColor);
+        add.setOpaque(true);
 
         frame.getContentPane().add(BorderLayout.NORTH,calc);
         calc.setBackground(new Color(66, 244, 155));
+        calc.setOpaque(true);
 
         for(int i = 1; i < 10; i++) {
             nums = "" + i;
@@ -113,12 +124,14 @@ public class JCal {
             num.addActionListener(new listener());
             num.setFont(numFont);
             num.setBackground(Color.gray);
+            num.setOpaque(true);
             numPanel.add(num);
         } //end for
         JButton zero = new JButton("0");
         zero.setFont(numFont);
         zero.addActionListener(new listener());
         zero.setBackground(Color.gray);
+        zero.setOpaque(true);
         numPanel.add(zero);
         numPanel.setBackground(Color.darkGray);
 
@@ -178,6 +191,9 @@ public class JCal {
             if (source instanceof JButton) {
                 JButton btn = (JButton)source;
                 String butSrcTxt = btn.getText();
+
+                operation = String.valueOf(butSrcTxt.charAt(0));
+
                 calc.setText(calc.getText() + butSrcTxt);
                 hasNum = true;
             }
